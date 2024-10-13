@@ -17,5 +17,8 @@ make defconfig
 echo CONFIG_CCACHE=y >> .config
 
 #skip xdp compile
-cat .config | grep -v "CONFIG_PACKAGE.*xdp" > .config.tmp
-cp .config.tmp .config
+#cat .config | grep -v "CONFIG_PACKAGE.*xdp" > .config.tmp
+#cp .config.tmp .config
+
+make defconfig
+
