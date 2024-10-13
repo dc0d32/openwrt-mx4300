@@ -13,6 +13,9 @@ make defconfig
 #add libpam
 #echo CONFIG_PACKAGE_libpam=y >> .config
 
+# use ccache to speed up builds
+echo CONFIG_CCACHE=y >> .config
+
 #skip xdp compile
 cat .config | grep -v "CONFIG_PACKAGE.*xdp" > .config.tmp
 cp .config.tmp .config
