@@ -15,10 +15,24 @@ echo CONFIG_PACKAGE_luci=y >> .config
 # use ccache to speed up builds
 echo CONFIG_CCACHE=y >> .config
 
+#add packages
+#echo CONFIG_PACKAGE_cloudflared=y >> .config
+#echo CONFIG_PACKAGE_luci-app-cloudflared=y >> .config
+echo CONFIG_PACKAGE_crowdsec-firewall-bouncer=y >> .config
+echo CONFIG_PACKAGE_luci-app-crowdsec-firewall-bouncer=y >> .config
+echo CONFIG_PACKAGE_luci-theme-material=y >> .config
+echo CONFIG_PACKAGE_luci-theme-openwrt=y >> .config
+echo CONFIG_PACKAGE_luci-proto-batman-adv=y >> .config
+#skip simple wpad, replace ith wpad-mesh
+cat .config | grep -v "CONFIG_PACKAGE_wpad-basic-mbedtls" > .config.tmp
+mv .config.tmp .config
+echo CONFIG_PACKAGE_wpad-mesh-mbedtls=y >> .config
+echo CONFIG_PACKAGE_adguardhome=y >> .config
+echo CONFIG_PACKAGE_mdns-repeater=y >> .config
+
 make defconfig
 
 #skip xdp compile
 cat .config | grep -v "CONFIG_PACKAGE.*xdp" > .config.tmp
 mv .config.tmp .config
-
 
