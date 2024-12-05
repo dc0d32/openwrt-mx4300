@@ -17,6 +17,6 @@ jobs:
         "BUILD_INIT": "init_build.sh",
         "BUILD_TYPE":  "nss",
         "BUILD_VER": "24.10.0-rc2",
-        "BUILD_TAG": "66e76aa",
+        "BUILD_TAG": "ea17e958b9933aaf3e4a390073025aa226fe91b7",
         "BUILD_SYNC": "y",
         "BUILD_KMOD": "y"}'
