@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 type="foss"  #foss nss
 ver="snapshot" #snapshot or release#
 sync="n" #sync with latest??
