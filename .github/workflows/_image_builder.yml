@@ -58,6 +58,9 @@ jobs:
       - name: Generate config
         run:  sh genconfig_${BUILD_TYPE}.sh ${BUILD_VER} ${BUILD_KMOD}
 
+      - name: Download
+        run:  make -j$(($(nproc)+1)) download
+
       - name: Build firmware images
         run:  make -j$(($(nproc)+1)) world
       
