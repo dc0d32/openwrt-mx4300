@@ -50,7 +50,7 @@ fi
 
 echo $PATCH
 curl -L $PATCH -o mx4300.diff
-patch -p1 -f < mx4300.diff
+patch -p1 < mx4300.diff
 
 #1. support both 24.10-snapshot and (tagged) release
 #2. upstream updated package/firmware/ipq-wifi/Makefile, need fix from qosmio
