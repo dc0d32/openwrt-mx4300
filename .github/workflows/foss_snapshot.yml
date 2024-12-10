@@ -13,11 +13,12 @@ jobs:
       build_settings: 
         '{"SOURCE_REPO":  "https://github.com/openwrt/openwrt.git", 
         "SOURCE_BRANCH": "main",
-        "BUILD_REPO":    "https://github.com/${{github.repository}}.git",
+        "BUILD_REPO":    "https://github.com/${{github.repository}}",
         "BUILD_BRANCH": "build",
         "BUILD_INIT": "init_build.sh",
         "BUILD_TYPE":  "foss",
         "BUILD_VER": "snapshot",
         "BUILD_TAG": "",
         "BUILD_SYNC": "n",
-        "BUILD_KMOD": "y"}'
+        "BUILD_KMOD": "y",
+        "FORCE_UNSAFE_CONFIGURE": 1}'
