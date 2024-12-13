@@ -27,7 +27,7 @@ if [ "${buildkmod}" != "n" ]; then
   echo extra kmods: $(echo $kmods | wc -w)
 fi
 
-cat nss-setup/config-nss.seed |  grep -v CONFIG_PACKAGE_luci | grep -v "CONFIG_PACKAGE_wpad-" | grep -v -E "mbedtls|openssl" >> .config
+cat nss-setup/config-nss.seed | grep -v CONFIG_PACKAGE_wpad >> .config
 echo "
 CONFIG_TARGET_qualcommax_ipq807x_DEVICE_linksys_mx4300=y
 CONFIG_PACKAGE_luci=y
@@ -36,22 +36,6 @@ CONFIG_PACKAGE_luci-proto-batman-adv=y
 CONFIG_PACKAGE_adguardhome=y
 CONFIG_PACKAGE_mdns-repeater=y
 CONFIG_PACKAGE_iperf3=y
-# - SQM: Smart Queue Management for bufferbloat control.
-CONFIG_PACKAGE_luci-app-sqm=y
-# - Statistics: Monitor your router’s performance (CPU, memory, bandwidth).
-CONFIG_PACKAGE_luci-app-statistics=y
-# - ACME: Automated SSL cert management. If you want to access your router via HTTPS and have a domain.
-#CONFIG_PACKAGE_luci-app-acme=y
-# - Watchcat: Automate reboots on connection loss.
-CONFIG_PACKAGE_luci-app-watchcat=y
-# - WireGuard: VPN support. Will also select the kernel module.
-CONFIG_PACKAGE_luci-proto-wireguard=y
-# - NLBWMon: Network usage monitoring to track bandwidth by host.
-CONFIG_PACKAGE_luci-app-nlbwmon=y
-# - htop: CLI tool to monitor system resource usage.
-#CONFIG_PACKAGE_htop=y
-# lm-sensors isn't needed for IPQ807x devices.
-#CONFIG_HTOP_LMSENSORS=n
 CONFIG_FEED_nss_packages=n
 " >> .config
 make defconfig

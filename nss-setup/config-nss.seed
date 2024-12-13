@@ -159,7 +159,7 @@ CONFIG_FEED_sqm_scripts_nss=n
 #####################################################################
 CONFIG_PACKAGE_luci=y
 # Enable HTTPS support
-CONFIG_PACKAGE_luci-ssl-openssl=y
+CONFIG_PACKAGE_luci-ssl-wolfssl=y
 
 #####################################################################
 # LUCI Applications
