@@ -27,15 +27,9 @@ if [ "${buildkmod}" != "n" ]; then
   echo extra kmods: $(echo $kmods | wc -w)
 fi
 
-cat nss-setup/config-nss.seed | grep -v CONFIG_PACKAGE_wpad >> .config
+cat nss-setup/config-nss.seed >> .config
 echo "
 CONFIG_TARGET_qualcommax_ipq807x_DEVICE_linksys_mx4300=y
-CONFIG_PACKAGE_luci=y
-CONFIG_PACKAGE_wpad-mesh-wolfssl=y
-CONFIG_PACKAGE_luci-proto-batman-adv=y
-CONFIG_PACKAGE_adguardhome=y
-CONFIG_PACKAGE_mdns-repeater=y
-CONFIG_PACKAGE_iperf3=y
 CONFIG_FEED_nss_packages=n
 " >> .config
 make defconfig
