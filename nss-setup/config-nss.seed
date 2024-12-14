@@ -117,24 +117,25 @@ CONFIG_ATH11K_DEBUGFS_STA=n
 # Disables thermal throttling support for ath11k.
 CONFIG_ATH11K_THERMAL=n
 
-# #####################################################################
-# # SSL Configuration
-# #####################################################################
-# # Use OpenSSL as the preferred SSL library
-# CONFIG_PACKAGE_libustream-openssl=y
-# CONFIG_PACKAGE_libustream-mbedtls=n
-# CONFIG_PACKAGE_libopenssl=y
-# CONFIG_LUA_ECO_OPENSSL=y
-# CONFIG_LUA_ECO_MBEDTLS=n
-# # Optimize OpenSSL for speed over size
-# CONFIG_OPENSSL_OPTIMIZE_SPEED=y
+#####################################################################
+# SSL Configuration
+#####################################################################
+# Use OpenSSL as the preferred SSL library
+CONFIG_PACKAGE_libustream-openssl=y
+CONFIG_PACKAGE_libustream-mbedtls=n
+CONFIG_PACKAGE_libopenssl=y
+CONFIG_LUA_ECO_OPENSSL=y
+CONFIG_LUA_ECO_MBEDTLS=n
+# Optimize OpenSSL for speed over size
+CONFIG_OPENSSL_OPTIMIZE_SPEED=y
 
 #####################################################################
 # Wireless Configuration
 #####################################################################
 # Enable WPA3 and Mesh support
+CONFIG_PACKAGE_wpad-mesh-openssl=y
+# Avoid using mbedTLS for consistency across packages and to avoid mixed SSL libraries.
 CONFIG_PACKAGE_wpad-basic-mbedtls=n
-CONFIG_PACKAGE_wpad-mesh-mbedtls=y
 
 #####################################################################
 # Library Optimization
@@ -158,15 +159,15 @@ CONFIG_FEED_sqm_scripts_nss=n
 #####################################################################
 CONFIG_PACKAGE_luci=y
 # Enable HTTPS support
-# CONFIG_PACKAGE_luci-ssl-wolfssl=y
+CONFIG_PACKAGE_luci-ssl-openssl=y
 
-# #####################################################################
-# # LUCI Applications
-# #####################################################################
-# # - Firewall: Manage firewall rules via LUCI.
-# CONFIG_PACKAGE_luci-app-firewall=y
-# # - Package manager for OpenWRT, manage installed packages via LUCI.
-# CONFIG_PACKAGE_luci-app-package-manager=y
+#####################################################################
+# LUCI Applications
+#####################################################################
+# - Firewall: Manage firewall rules via LUCI.
+CONFIG_PACKAGE_luci-app-firewall=y
+# - Package manager for OpenWRT, manage installed packages via LUCI.
+CONFIG_PACKAGE_luci-app-package-manager=y
 
 # - iperf3: CLI tool to measure network performance.
 #           This is essential to test WiFi speeds,
@@ -180,16 +181,16 @@ CONFIG_PACKAGE_iperf3=y
 
 #### You can delete or comment out with '#' any package you don't want to install.
 
-# #####################################################################
-# # LUCI Applications
-# #####################################################################
+#####################################################################
+# LUCI Applications
+#####################################################################
 
 # - SQM: Smart Queue Management for bufferbloat control.
 CONFIG_PACKAGE_luci-app-sqm=y
 # - Statistics: Monitor your router’s performance (CPU, memory, bandwidth).
 CONFIG_PACKAGE_luci-app-statistics=y
-# # - ACME: Automated SSL cert management. If you want to access your router via HTTPS and have a domain.
-# CONFIG_PACKAGE_luci-app-acme=y
+# - ACME: Automated SSL cert management. If you want to access your router via HTTPS and have a domain.
+CONFIG_PACKAGE_luci-app-acme=y
 # - Watchcat: Automate reboots on connection loss.
 CONFIG_PACKAGE_luci-app-watchcat=y
 # - WireGuard: VPN support. Will also select the kernel module.
@@ -220,10 +221,14 @@ CONFIG_PACKAGE_kmod-usb-storage=y
 # Check '/sys/fs/pstore' for logs after a crash.
 CONFIG_PACKAGE_kmod-ramoops=y
 
-# #####################################################################
-# # Packages
-# #####################################################################
+#####################################################################
+# Packages
+#####################################################################
 
+# - curl: CLI tool to transfer data with URLs. Useful for scripting, and supperior to wget.
+CONFIG_PACKAGE_curl=y
+CONFIG_LIBCURL_OPENSSL=y
+CONFIG_LIBCURL_MBEDTLS=n
 # - rsync: Efficient file transfers and backups.
 CONFIG_PACKAGE_rsync=y
 # - jq: Parse JSON data from the command line. Useful for scripting, and WAY better than `jsonfilter`.
@@ -250,4 +255,4 @@ CONFIG_PACKAGE_mdns-repeater=y
 CONFIG_PACKAGE_iperf3=y
 
 CONFIG_PACKAGE_luci-app-crowdsec-firewall-bouncer=y
-CONFIG_PACKAGE_zsh=y
+
