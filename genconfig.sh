@@ -34,7 +34,7 @@ CONFIG_FEED_nss_packages=n
 " >> .config
 make defconfig
 
-for k in $kmods; do grep -q $k=y .config || echo CONFIG_PACKAGE_$k=m >> .config; done
+for k in $kmods; do grep -q $k=y .config || echo CONFIG_PACKAGE_$k=y >> .config; done
 #nss patch has some dependency issue on 24.10 + kmods
 #to fix:
 #kmod-vxlan and kmod-nat46 must be compiled as y to keep kmod-qca-nss-ecm as y
