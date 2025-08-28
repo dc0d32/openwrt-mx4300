@@ -1,4 +1,6 @@
 #!/bin/sh
+# for WSL, run this
+# export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib
 
 ./scripts/feeds update
 ./scripts/feeds install -a
