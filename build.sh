@@ -65,6 +65,19 @@ echo "CONFIG_PACKAGE_luci-app-vnstat2=y" >> .config
 # WireGuard
 echo "CONFIG_PACKAGE_qrencode=y" >> .config
 
+# dawn
+echo "CONFIG_PACKAGE_luci-app-dawn=y" >> .config
+echo "CONFIG_PACKAGE_dawn=y" >> .config
+
+# bling
+echo "CONFIG_PACKAGE_luci-mod-dashboard=y" >> .config
+# echo "CONFIG_PACKAGE_luci-theme-material=y" >> .config
+
+# zram
+echo "CONFIG_PACKAGE_zram-swap=y" >> .config
+echo "CONFIG_PACKAGE_kmod-lib-lz4=y" >> .config
+echo "CONFIG_PACKAGE_kmod-lib-zstd=y" >> .config
+
 # build
 make defconfig
 
