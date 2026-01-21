@@ -14,6 +14,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     
     steps:
       - name: Checkout repository
@@ -48,6 +49,14 @@ jobs:
         run: |
           git subtree add --prefix 25.12-nss qosmio 25.12-nss --squash
       
+      - name: Cache OpenWRT downloads
+        uses: actions/cache@v4
+        with:
+          path: 25.12-nss/dl
+          key: openwrt-downloads-${{ hashFiles('25.12-nss/.config') }}
+          restore-keys: |
+            openwrt-downloads-
+      
       - name: Build firmware
         run: |
           cd 25.12-nss
@@ -59,5 +68,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: openwrt-mx4300-firmware
-          path: 25.12-nss/bin/targets/qualcommax/ipq807x/openwrt-qualcommax-ipq807x-linksys_mx4300-squashfs-sysupgrade.bin
+          path: |
+            25.12-nss/bin/targets/qualcommax/ipq807x/openwrt-qualcommax-ipq807x-linksys_mx4300-squashfs-sysupgrade.bin
+            25.12-nss/bin/targets/qualcommax/ipq807x/sha256sums
+            25.12-nss/bin/targets/qualcommax/ipq807x/*.buildinfo
           if-no-files-found: error
