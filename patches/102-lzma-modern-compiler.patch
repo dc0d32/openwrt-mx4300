@@ -1,0 +1,76 @@
+--- a/C/LzmaUtil/LzmaUtil.c
++++ b/C/LzmaUtil/LzmaUtil.c
+@@ -249,6 +249,6 @@ int MY_CDECL main(int numArgs, const char
+ {
+   char rs[800] = { 0 };
+   int res = main2(numArgs, args, rs);
+-  printf(rs);
++  printf("%s", rs);
+   return res;
+ }
+--- a/C/LzmaEnc.c
++++ b/C/LzmaEnc.c
+@@ -1919,9 +1919,8 @@ static SRes LzmaEnc_Alloc(CLzmaEnc *p, U
+ {
+   UInt32 beforeSize = kNumOpts;
+-  Bool btMode;
+   if (!RangeEnc_Alloc(&p->rc, alloc))
+     return SZ_ERROR_MEM;
+-  btMode = (p->matchFinderBase.btMode != 0);
+   #ifdef COMPRESS_MF_MT
++  Bool btMode = (p->matchFinderBase.btMode != 0);
+   p->mtMode = (p->multiThread && !p->fastMode && btMode);
+   #endif
+@@ -2163,1 +2163,2 @@ SRes LzmaEnc_CodeOneMemBlock(CLzmaEncHan
+   res = LzmaEnc_CodeOneBlock(p, True, desiredPackSize, *unpackSize);
++  p->rc.outStream = 0;
+--- a/CPP/7zip/Compress/LZMA_Alone/LzmaAlone.cpp
++++ b/CPP/7zip/Compress/LZMA_Alone/LzmaAlone.cpp
+@@ -463,8 +463,8 @@ int main2(int numArgs, const char *args[]
+     {
+       Byte b = Byte(fileSize >> (8 * i));
+       if (outStream->Write(&b, 1, 0) != S_OK)
+       {
+-        fprintf(stderr, kWriteError);
++        fprintf(stderr, "%s", kWriteError);
+         return 1;
+       }
+     }
+@@ -488,7 +488,7 @@ int main2(int numArgs, const char *args[]
+     const UInt32 kPropertiesSize = 5;
+     Byte header[kPropertiesSize + 8];
+     if (ReadStream_FALSE(inStream, header, kPropertiesSize + 8) != S_OK)
+     {
+-      fprintf(stderr, kReadError);
++      fprintf(stderr, "%s", kReadError);
+       return 1;
+     }
+     if (decoderSpec->SetDecoderProperties2(header, kPropertiesSize) != S_OK)
+--- a/CPP/7zip/Compress/LZMA_Alone/LzmaBenchCon.cpp
++++ b/CPP/7zip/Compress/LZMA_Alone/LzmaBenchCon.cpp
+@@ -142,6 +142,6 @@ HRESULT CBenchCallback::SetDecodeResult(c
+   {
+     UInt64 rating = GetDecompressRating(info.GlobalTime, info.GlobalFreq, info.UnpackSize, info.PackSize, info.NumIterations);
+-    fprintf(f, kSep);
++    fprintf(f, "%s", kSep);
+     CBenchInfo info2 = info;
+     info2.UnpackSize *= info2.NumIterations;
+     info2.PackSize *= info2.NumIterations;
+@@ -200,7 +200,7 @@ HRESULT LzmaBenchCon(
+   for (j = 0; j < 2; j++)
+   {
+     fprintf(f, "   Speed Usage    R/U Rating");
+     if (j == 0)
+-      fprintf(f, kSep);
++      fprintf(f, "%s", kSep);
+   }
+   fprintf(f, "\n   ");
+@@ -207,7 +207,7 @@ HRESULT LzmaBenchCon(
+   for (j = 0; j < 2; j++)
+   {
+     fprintf(f, "    KB/s     %%   MIPS   MIPS");
+     if (j == 0)
+-      fprintf(f, kSep);
++      fprintf(f, "%s", kSep);
+   }
+   fprintf(f, "\n\n");

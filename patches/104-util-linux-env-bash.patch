@@ -1,0 +1,10 @@
+--- a/tools/all_errnos
++++ b/tools/all_errnos
+@@ -1 +1 @@
+-#!/bin/bash
++#!/usr/bin/env bash
+--- a/tools/all_syscalls
++++ b/tools/all_syscalls
+@@ -1 +1 @@
+-#!/bin/bash
++#!/usr/bin/env bash

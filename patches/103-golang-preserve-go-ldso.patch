@@ -1,0 +1,9 @@
+--- a/feeds/packages/lang/golang/golang-values.mk
++++ b/feeds/packages/lang/golang/golang-values.mk
+@@ -105,7 +105,6 @@ unexport \
+   GO_GCFLAGS \
+   GO_LDFLAGS \
+-  GO_LDSO \
+   GO_DISTFLAGS \
+   GOBUILDTIMELOGFILE \
+   GOROOT_BOOTSTRAP
