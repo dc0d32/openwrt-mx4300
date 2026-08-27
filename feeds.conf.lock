@@ -5,3 +5,4 @@ src-git telephony https://git.openwrt.org/feed/telephony.git^2618106d5846a4a542f
 src-git nss_packages https://github.com/qosmio/nss-packages.git^0d970dbf0185e3f53709bd803e8a466598023c57
 src-git sqm_scripts_nss https://github.com/qosmio/sqm-scripts-nss.git^4b4ed8639229be5e70cf94b73cdf7dbc09e66d5d
 src-git video https://github.com/openwrt/video.git^094bf58da6682f895255a35a84349a79dab4bf95
+src-git mesh_topology https://github.com/dc0d32/luci-app-mesh-topology.git^3f4d412c79f376960e35ef3849e31b3ce8e5a9e0

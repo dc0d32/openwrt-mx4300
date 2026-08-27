@@ -44,6 +44,7 @@ CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=y
 CONFIG_PACKAGE_luci-app-package-manager=y
 CONFIG_PACKAGE_luci-mod-dashboard=y
+CONFIG_PACKAGE_luci-app-mesh-topology=y
 CONFIG_PACKAGE_luci-proto-batman-adv=y
 CONFIG_PACKAGE_libustream-mbedtls=y
 CONFIG_PACKAGE_umdns=y
@@ -74,6 +75,8 @@ require_y PACKAGE_kmod-batman-adv
 require_y PACKAGE_libustream-mbedtls
 require_y PACKAGE_wpad-mesh-mbedtls
 require_y PACKAGE_luci
+require_y PACKAGE_lldpd
+require_y PACKAGE_luci-app-mesh-topology
 require_y PACKAGE_iperf3
 require_y CCACHE
 reject_y PACKAGE_dawn
@@ -114,6 +117,8 @@ rootfs="$(find "$OPENWRT_DIR/build_dir" -path '*/root-ath79/etc/dropbear/authori
 test -n "$rootfs"
 cmp "$ROOT/files/etc/dropbear/authorized_keys" "$rootfs"
 grep -Eq '^kmod-batman-adv([[:space:]-])' "$manifest"
+grep -Eq '^lldpd([[:space:]-])' "$manifest"
+grep -Eq '^luci-app-mesh-topology([[:space:]-])' "$manifest"
 grep -Eq '^wpad-mesh-mbedtls([[:space:]-])' "$manifest"
 if grep -Eq '^(dawn|luci-app-dawn)([[:space:]-])' "$manifest"; then
   echo "forbidden DAWN package present in AP-4 image" >&2

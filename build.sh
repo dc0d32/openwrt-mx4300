@@ -43,6 +43,7 @@ CONFIG_PACKAGE_luci-app-wol=y
 CONFIG_PACKAGE_luci-app-crowdsec-firewall-bouncer=y
 CONFIG_PACKAGE_qrencode=y
 CONFIG_PACKAGE_luci-mod-dashboard=y
+CONFIG_PACKAGE_luci-app-mesh-topology=y
 CONFIG_PACKAGE_zram-swap=y
 CONFIG_PACKAGE_kmod-lib-lz4=y
 CONFIG_PACKAGE_kmod-lib-zstd=y
@@ -85,6 +86,8 @@ require_y TARGET_qualcommax_ipq807x_DEVICE_linksys_mx4300
 require_y ATH11K_NSS_MESH_SUPPORT
 require_y PACKAGE_kmod-batman-adv
 require_y PACKAGE_kmod-qca-nss-drv-wifi-meshmgr
+require_y PACKAGE_lldpd
+require_y PACKAGE_luci-app-mesh-topology
 require_y NSS_DRV_WIFIOFFLOAD_ENABLE
 require_y CCACHE
 reject_y PACKAGE_avahi-dbus-daemon
@@ -135,6 +138,8 @@ test -n "$rootfs"
 cmp "$ROOT/files/etc/dropbear/authorized_keys" "$rootfs"
 grep -Eq '^kmod-batman-adv([[:space:]-])' "$manifest"
 grep -Eq '^kmod-qca-nss-drv-wifi-meshmgr([[:space:]-])' "$manifest"
+grep -Eq '^lldpd([[:space:]-])' "$manifest"
+grep -Eq '^luci-app-mesh-topology([[:space:]-])' "$manifest"
 grep -Eq '^wpad-mesh-openssl([[:space:]-])' "$manifest"
 
 cp "$ROOT/versions.env" "$target_dir/source-versions.txt"

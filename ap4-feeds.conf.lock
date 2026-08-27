@@ -3,3 +3,4 @@ src-git luci https://git.openwrt.org/project/luci.git^8d9defc6a2b0a283f3595503e4
 src-git routing https://git.openwrt.org/feed/routing.git^b43e4ac560ccbafba21dc3ab0dbe57afc07e7b88
 src-git telephony https://git.openwrt.org/feed/telephony.git^2618106d5846a4a542fdf5809f0d3ed228ce439b
 src-git video https://github.com/openwrt/video.git^094bf58da6682f895255a35a84349a79dab4bf95
+src-git mesh_topology https://github.com/dc0d32/luci-app-mesh-topology.git^3f4d412c79f376960e35ef3849e31b3ce8e5a9e0
