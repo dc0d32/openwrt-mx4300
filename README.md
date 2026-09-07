@@ -1,9 +1,13 @@
 # Reproducible OpenWrt firmware builds
 
-This repository builds the single custom NSS firmware image shared by ares and
-AP-1 through AP-3. Router and AP behavior is not baked into separate images;
-it is applied afterward by the declarative fleet model in
-`dc0d32/homelab/openwrt`.
+This repository builds two universal MX4300 firmware profiles:
+
+- `build.sh` retains the known NSS image used by ares and AP-1 through AP-3.
+- `build-vanilla.sh` builds an official upstream OpenWrt image without NSS
+  offload for controlled comparison.
+
+Router and AP behavior is not baked into separate images; it is applied
+afterward by the declarative fleet model in `dc0d32/homelab/openwrt`.
 
 The target is specifically **Linksys MX4300 / LN1301**. MX4301 compatibility
 is not claimed without separate board-level confirmation.
@@ -40,16 +44,25 @@ detached, and installs the locked feed configuration. `build.sh` then expands
 qosmio's NSS seed, applies the MX4300/package fragment, validates load-bearing
 symbols and builds.
 
+`vanilla-versions.env` independently pins official OpenWrt 25.12.0.
+`prepare-vanilla-source.sh` and `build-vanilla.sh` use a separate worktree,
+feed lock and artifact provenance. The vanilla source is not patched: only
+the package selection and public recovery key differ from the official
+source-build recipe. Upstream's required `kmod-qca-nss-dp` Ethernet driver is
+retained, but NSS offload, ECM, NSS firmware and NSS SQM packages are rejected.
+
 The image includes the operator's **public** Dropbear deploy key so a
 factory-reset node can be restored from OpenWrt's `192.168.1.1` defaults. No
 private key, password or WiFi secret is embedded.
 
 ## GitHub Actions
 
-The workflow:
+The workflow builds the NSS MX4300, vanilla MX4300, Archer C7 and both Orbi
+profiles. Each job:
 
 1. uses an Ubuntu 24.04 runner and commit-pinned Actions;
-2. checks out the pinned qosmio source instead of adding a moving subtree;
+2. checks out its pinned upstream or NSS source instead of adding a moving
+   subtree;
 3. caches `dl/` by source/feed lock;
 4. restores and saves `.ccache` for compiler reuse;
 5. uploads firmware, checksums, manifests, build information and explicit
@@ -77,6 +90,17 @@ Andromeda remains a local builder only; it is not a GitHub self-hosted runner.
 ./build-local.sh
 ```
 
+Build the separate upstream non-NSS MX4300 image:
+
+```sh
+./build-vanilla-local.sh
+```
+
+The vanilla wrapper runs the official build commands in a clean Debian
+container on Andromeda. This avoids carrying NixOS host-tool patches in the
+comparison image. Andromeda remains a local builder and is not registered as
+a CI runner.
+
 On NixOS, the wrapper automatically enters the repository's `shell.nix`.
 This is required because host tools such as util-linux need ncurses from
 the Nix store rather than a conventional `/usr/lib` path. The shell disables
@@ -95,10 +119,15 @@ The default persistent worktree is
 toolchain and build directories survive between runs. Override the location
 with `OPENWRT_CACHE_ROOT` or `OPENWRT_WORKTREE`.
 
+The vanilla profile uses
+`${XDG_CACHE_HOME:-~/.cache}/openwrt-mx4300/vanilla-source`, so building or
+cleaning it cannot alter the NSS source tree.
+
 To validate only feed resolution and final Kconfig:
 
 ```sh
 ./build-local.sh configure-only
+./build-vanilla-local.sh configure-only
 ```
 
 Build AP-4 locally with the same persistent cache strategy:
@@ -132,6 +161,9 @@ Build both Orbi profiles:
   provenance beside the artifacts. `wrapper-source.tar` contains the exact
   wrapper tree used, including local uncommitted changes, and its SHA-256 is
   recorded in `wrapper-provenance.txt`.
+- The vanilla profile is a comparison build, not a declaration that NSS is
+  retired. It keeps BATMAN V, encrypted 802.11s and the router/AP package set
+  while removing only NSS offload integration.
 
 The unidentified Omada/switch hardware is not included until its exact model
 and hardware revision are known.
