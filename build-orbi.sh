@@ -104,6 +104,10 @@ fi
 
 rm -rf build_dir/target-*/apk-* build_dir/target-*/openssl-* \
   build_dir/target-*/util-linux-*
+# Source upgrades can change fortify patches without changing the upstream
+# archive version, so OpenWrt's persistent cache may retain stale headers.
+make toolchain/fortify-headers/clean
+make toolchain/fortify-headers/compile
 make download -j"$JOBS" V=s
 make -j"$JOBS" V=s
 

@@ -37,3 +37,16 @@ trap - EXIT
   echo "wrapper_dirty=$wrapper_dirty"
   echo "wrapper_source_sha256=$(sha256sum "$archive" | cut -d' ' -f1)"
 } >> "$provenance"
+
+# OpenWrt creates sha256sums before wrappers add provenance files. Persistent
+# target directories can therefore retain stale hashes from an earlier build.
+# Regenerate the complete manifest only after every wrapper artifact is final.
+(
+  cd "$target_dir"
+  mapfile -d '' -t outputs < <(
+    find . -maxdepth 1 -type f ! -name sha256sums -printf '%P\0' |
+      LC_ALL=C sort -z
+  )
+  [ "${#outputs[@]}" -gt 0 ]
+  sha256sum "${outputs[@]}" > sha256sums
+)
